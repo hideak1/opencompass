@@ -6,7 +6,7 @@ cpm_kernels
 datasets>=2.12.0
 evaluate>=0.3.0
 fairscale
-faiss_gpu==1.7.2
+faiss_gpu==1.7.3
 fuzzywuzzy
 jieba
 mmengine>=0.8.2
