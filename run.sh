@@ -1,9 +1,44 @@
-python run.py --datasets ceval_ppl mmlu_ppl \
---hf-path huggyllama/llama-7b \  # HuggingFace 模型地址
---model-kwargs device_map='auto' \  # 构造 model 的参数
---tokenizer-kwargs padding_side='left' truncation='left' use_fast=False \  # 构造 tokenizer 的参数
---max-out-len 100 \  # 最长生成 token 数
---max-seq-len 2048 \  # 模型能接受的最大序列长度
---batch-size 8 \  # 批次大小
---no-batch-padding \  # 不打开 batch padding，通过 for loop 推理，避免精度损失
---num-gpus 1  # 运行该模型所需的最少 gpu 数
+# python run.py --datasets gsm8k_gen \
+#     --hf-path /mnt/petrelfs/share_data/quxiaoye/models/open_llama_3b_v2/ \
+#     --model-kwargs device_map='auto' \
+#     --tokenizer-kwargs padding_side='left' truncation='left' use_fast=False \
+#     --max-out-len 100 \
+#     --max-seq-len 2048 \
+#     --batch-size 8 \
+#     --no-batch-padding \
+#     --num-gpus 1
+
+{
+    export MKL_THREADING_LAYER=GNU
+    # python run.py --datasets nq_gen_32shot \
+    #     --hf-path /mnt/petrelfs/share_data/quxiaoye/models/pythia-2.8b/ \
+    #     --model-kwargs device_map='auto' \
+    #     --tokenizer-kwargs padding_side='left' truncation='left' use_fast=True \
+    #     --max-out-len 100 \
+    #     --max-seq-len 2048 \
+    #     --batch-size 8 \
+    #     --no-batch-padding \
+    #     --num-gpus 1 \
+    #     --slurm \
+    #     --partition "MoE"
+
+    python run.py --datasets nq_gen_32shot \
+        --models llama_moe_3b \
+        --model-kwargs device_map='auto' \
+        --tokenizer-kwargs padding_side='left' truncation='left' use_fast=False \
+        --max-out-len 100 \
+        --max-seq-len 2048 \
+        --batch-size 8 \
+        --no-batch-padding \
+        --num-gpus 1 \
+        --slurm \
+        --partition "MoE"
+}
+
+# /mnt/petrelfs/share_data/quxiaoye/models/open_llama_3b_v2/
+# /mnt/petrelfs/share_data/quxiaoye/models/opt-2.7b/
+# /mnt/petrelfs/share_data/quxiaoye/models/pythia-2.8b/
+# /mnt/petrelfs/share_data/quxiaoye/models/Sheared-LLaMA-2.7B/
+# /mnt/petrelfs/share_data/quxiaoye/models/INCITE-Base-3B/
+# llama_moe_3.5b
+# llama_moe_3b

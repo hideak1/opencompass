@@ -5,9 +5,9 @@ models = [
     # LLaMA 13B
     dict(
         type=LlamaMoECausalLM,
-        abbr='llama-moefication-13b',
-        path="/mnt/petrelfs/share_data/quxiaoye/model_back/13b_moe_first100Btoken_models/checkpoint-2500/",
-        tokenizer_path='/mnt/petrelfs/share_data/quxiaoye/model_back/13b_moe_first100Btoken_models/checkpoint-2500/',
+        abbr='llama-moe-3.5b',
+        path="/mnt/petrelfs/share_data/quxiaoye/runs/llama2_random_scale4_112gpus_dynamic_data/outputs/cpt-llama2_random_scale4_112gpus_dynamic_data-2356022/checkpoint-13600/",
+        tokenizer_path='/mnt/petrelfs/share_data/quxiaoye/runs/llama2_random_scale4_112gpus_dynamic_data/outputs/cpt-llama2_random_scale4_112gpus_dynamic_data-2356022/checkpoint-13600/',
         tokenizer_kwargs=dict(padding_side='left',
                               truncation_side='left',
                               use_fast=False,
@@ -17,6 +17,6 @@ models = [
         batch_size=8,
         model_kwargs=dict(device_map='auto'),
         batch_padding=False, # if false, inference with for-loop without batch padding
-        run_cfg=dict(num_gpus=2, num_procs=1),
+        run_cfg=dict(num_gpus=1, num_procs=1),
     )
 ]
