@@ -21,9 +21,16 @@ English | [简体中文](README_zh-CN.md)
     👋 join us on <a href="https://discord.gg/KKwfEbFj7U" target="_blank">Discord</a> and <a href="https://r.vansin.top/?r=opencompass" target="_blank">WeChat</a>
 </p>
 
-## 🧭	Welcome
+## 🔥 For LLaMA-MoE Users
 
-to **OpenCompass**!
+```bash
+# 1. change model and tokenizer directory in `configs/models/smoe`
+# 2. run the evaluation test for NQ
+bash run.sh llama_moe_3.5b
+```
+
+
+## 🧭	Welcome to **OpenCompass**!
 
 Just like a compass guides us on our journey, OpenCompass will guide you through the complex landscape of evaluating large language models. With its powerful algorithms and intuitive interface, OpenCompass makes it easy to assess the quality and effectiveness of your NLP models.
 

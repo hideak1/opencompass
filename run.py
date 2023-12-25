@@ -325,4 +325,7 @@ def main():
 
 
 if __name__ == '__main__':
+    # print current program's process id (pid)
+    print(f'PID: {os.getpid()}')
+
     main()
