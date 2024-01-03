@@ -123,6 +123,12 @@ def parse_args():
         'Will be overrideen by the "retry" argument in the config.',
         type=int,
         default=2)
+    parser.add_argument(
+        '--dump-eval-details',
+        help='Whether to dump the evaluation details, including the '
+        'correctness of each sample, bpb, etc.',
+        action='store_true',
+    )
     # set srun args
     slurm_parser = parser.add_argument_group('slurm_args')
     parse_slurm_args(slurm_parser)
@@ -132,6 +138,9 @@ def parse_args():
     # set hf args
     hf_parser = parser.add_argument_group('hf_args')
     parse_hf_args(hf_parser)
+    # set custom dataset args
+    custom_dataset_parser = parser.add_argument_group('custom_dataset_args')
+    parse_custom_dataset_args(custom_dataset_parser)
     args = parser.parse_args()
     if args.slurm:
         assert args.partition is not None, (
@@ -175,8 +184,14 @@ def parse_hf_args(hf_parser):
     hf_parser.add_argument('--hf-path', type=str)
     hf_parser.add_argument('--peft-path', type=str)
     hf_parser.add_argument('--tokenizer-path', type=str)
-    hf_parser.add_argument('--model-kwargs', nargs='+', action=DictAction)
-    hf_parser.add_argument('--tokenizer-kwargs', nargs='+', action=DictAction)
+    hf_parser.add_argument('--model-kwargs',
+                           nargs='+',
+                           action=DictAction,
+                           default={})
+    hf_parser.add_argument('--tokenizer-kwargs',
+                           nargs='+',
+                           action=DictAction,
+                           default={})
     hf_parser.add_argument('--max-out-len', type=int)
     hf_parser.add_argument('--max-seq-len', type=int)
     hf_parser.add_argument('--no-batch-padding',
@@ -185,6 +200,18 @@ def parse_hf_args(hf_parser):
     hf_parser.add_argument('--batch-size', type=int)
     hf_parser.add_argument('--num-gpus', type=int)
     hf_parser.add_argument('--pad-token-id', type=int)
+
+
+def parse_custom_dataset_args(custom_dataset_parser):
+    """These args are all for the quick construction of custom datasets."""
+    custom_dataset_parser.add_argument('--custom-dataset-path', type=str)
+    custom_dataset_parser.add_argument('--custom-dataset-meta-path', type=str)
+    custom_dataset_parser.add_argument('--custom-dataset-data-type',
+                                       type=str,
+                                       choices=['mcq', 'qa'])
+    custom_dataset_parser.add_argument('--custom-dataset-infer-method',
+                                       type=str,
+                                       choices=['gen', 'ppl'])
 
 
 def main():
@@ -294,6 +321,8 @@ def main():
 
         if args.dlc or args.slurm or cfg.get('eval', None) is None:
             fill_eval_cfg(cfg, args)
+        if args.dump_eval_details:
+            cfg.eval.runner.task.dump_details = True
 
         if args.partition is not None:
             if RUNNERS.get(cfg.eval.runner.type) == SlurmRunner:
