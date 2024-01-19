@@ -168,6 +168,11 @@ class BaseModel:
     def to(self, device):
         self.model.to(device)
 
+    def callback(self):
+        pass
+    
+    def init(self):
+        pass
 
 class LMTemplateParser:
     """Intermidate prompt template parser, specifically for language models.

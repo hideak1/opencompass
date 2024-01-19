@@ -14,7 +14,7 @@ from opencompass.tasks.base import BaseTask
 from opencompass.utils import (build_dataset_from_cfg, build_model_from_cfg,
                                get_infer_output_path, get_logger,
                                task_abbr_from_cfg)
-
+import numpy as np
 
 @TASKS.register_module(force=(__name__ == '__main__'))  # A hack for script run
 class OpenICLInferTask(BaseTask):
@@ -56,11 +56,13 @@ class OpenICLInferTask(BaseTask):
 
     def run(self):
         self.logger.info(f'Task {task_abbr_from_cfg(self.cfg)}')
+        
         for model_cfg, dataset_cfgs in zip(self.model_cfgs, self.dataset_cfgs):
             self.max_out_len = model_cfg.get('max_out_len', None)
             self.batch_size = model_cfg.get('batch_size', None)
             self.model = build_model_from_cfg(model_cfg)
-
+            
+            self.model.init()
             for dataset_cfg in dataset_cfgs:
                 self.model_cfg = model_cfg
                 self.dataset_cfg = dataset_cfg
@@ -76,6 +78,8 @@ class OpenICLInferTask(BaseTask):
                 if osp.exists(out_path):
                     continue
                 self._inference()
+        
+        self.model.callback()
 
     def _inference(self):
         self.logger.info(

@@ -130,6 +130,7 @@ class GenInferencer(BaseInferencer):
             else:
                 entry = datum
                 golds = [None for _ in range(len(entry))]
+
             # 5-1. Inference with local model
             extra_gen_kwargs = {}
             sig = inspect.signature(self.model.generate)

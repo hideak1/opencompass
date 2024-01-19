@@ -117,6 +117,7 @@ class HuggingFace(BaseModel):
         self.pad_token_id = pad_token_id
         assert mode in ['none', 'mid']
         self.mode = mode
+        print(f'tokenizer path {tokenizer_path}')
         self._load_tokenizer(path=path,
                              tokenizer_path=tokenizer_path,
                              tokenizer_kwargs=tokenizer_kwargs)
@@ -238,6 +239,7 @@ class HuggingFace(BaseModel):
         """
         generation_kwargs = kwargs.copy()
         generation_kwargs.update(self.generation_kwargs)
+        
         if self.batch_padding and len(inputs) > 1:
             return self._batch_generate(inputs=inputs,
                                         max_out_len=max_out_len,
@@ -284,6 +286,7 @@ class HuggingFace(BaseModel):
                                                   truncation=True,
                                                   max_length=self.max_seq_len -
                                                   max_out_len)
+        
         tokens = {
             k: torch.tensor(np.array(tokens[k]), device=self.model.device)
             for k in tokens if k in ['input_ids', 'attention_mask']

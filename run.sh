@@ -31,7 +31,7 @@ source ~/anaconda3/bin/activate opencompass
         --tokenizer-kwargs padding_side='left' truncation='left' use_fast=False \
         --max-out-len 100 \
         --max-seq-len 2048 \
-        --batch-size 8 \
+        --batch-size 1 \
         --no-batch-padding \
         --num-gpus 1 \
         --partition "MoE"
