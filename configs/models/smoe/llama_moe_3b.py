@@ -6,8 +6,8 @@ models = [
     dict(
         type=LlamaMoECausalLM,
         abbr='llama-moe-3b',
-        path="/mnt/petrelfs/share_data/quxiaoye/runs/llama2_random_split_112gpus_16_2/outputs/cpt-llama2_random_split_112gpus_16_2_scale_factor_8-2342244/checkpoint-13600/",
-        tokenizer_path='/mnt/petrelfs/share_data/quxiaoye/runs/llama2_random_split_112gpus_16_2/outputs/cpt-llama2_random_split_112gpus_16_2_scale_factor_8-2342244/checkpoint-13600/',
+        path="/data/hongxuan/runs/LLaMA-MoE-v1-3_0B-2_16/",
+        tokenizer_path='/data/hongxuan/runs/LLaMA-MoE-v1-3_0B-2_16',
         tokenizer_kwargs=dict(padding_side='left',
                               truncation_side='left',
                               use_fast=False,
