@@ -59,7 +59,7 @@ class NaivePartitioner(BasePartitioner):
         Returns:
             List[Dict]: A list of tasks.
         """
-
+        print(f'naive partitioner....')
         tasks = []
         for comb in model_dataset_combinations:
             for model in comb['models']:

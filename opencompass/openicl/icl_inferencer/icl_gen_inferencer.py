@@ -122,6 +122,8 @@ class GenInferencer(BaseInferencer):
         # 4. Wrap prompts with Dataloader
         dataloader = self.get_dataloader(prompt_list[index:], self.batch_size)
 
+
+
         # 5. Inference for prompts in each batch
         logger.info('Starting inference process...')
         for datum in tqdm(dataloader, disable=not self.is_main_process):
@@ -138,6 +140,7 @@ class GenInferencer(BaseInferencer):
                 extra_gen_kwargs['stopping_criteria'] = self.stopping_criteria
             with torch.no_grad():
                 parsed_entries = self.model.parse_template(entry, mode='gen')
+                print(f'parsed entries {parsed_entries}')
                 results = self.model.generate_from_template(
                     entry, max_out_len=self.max_out_len, **extra_gen_kwargs)
                 generated = results

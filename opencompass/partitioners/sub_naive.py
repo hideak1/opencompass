@@ -95,6 +95,7 @@ class SubjectiveNaivePartitioner(NaivePartitioner):
         Returns:
             List[Dict]: A list of tasks.
         """
+        print(f'sub naive partitioner....')
         models = self.models if self.models != [] else models
         base_models, compare_models = self.base_models, self.compare_models
         if self.mode == 'singlescore':

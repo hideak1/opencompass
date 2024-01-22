@@ -57,6 +57,7 @@ class MultimodalNaivePartitioner(BasePartitioner):
         tasks = []
         for model, dataset, evaluator, load_from in zip(
                 models, datasets, evaluators, load_froms):
+            print(f'model: {model} dataset: {dataset} evaluator: {evaluator} load_from: {load_from}')
             task = Config({
                 'model': model,
                 'dataset': dataset,

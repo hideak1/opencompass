@@ -34,7 +34,7 @@ source ~/anaconda3/bin/activate opencompass
         --batch-size 1 \
         --no-batch-padding \
         --num-gpus 1 \
-        --partition "MoE"
+        --max-partition-size 80000
 }
         # --max-partition-size 5000 \
 

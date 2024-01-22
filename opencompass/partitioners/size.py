@@ -84,7 +84,7 @@ class SizePartitioner(BasePartitioner):
         Returns:
             List[ConfigDict]: A list of tasks.
         """
-
+        print(f'size partitioner.... strategy {self.strategy} dataset combinations {model_dataset_combinations}')
         tasks = []
         for comb in model_dataset_combinations:
             comb['datasets'] = sorted(comb['datasets'],
